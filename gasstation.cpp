@@ -1,43 +1,19 @@
-#include<bits/stdc++.h>
-using namespace std;
-int main()
-{
-    int n;
-    cin>>n;
-    int gas[n];
-    int n1;
-    cin>>n1;
-    int cost[n1];
-    for(int i=0;i<n;i++){
-        cin>>gas[i];
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int n=gas.size();
+        int startindex=0;
+        int currentgas=0;
+        int totalgas=0;
+        for(int i=0;i<n;i++){
+            int diff=gas[i]-cost[i];
+            currentgas+=diff;
+            totalgas+=diff;
+            if(currentgas<0){
+                currentgas=0;
+                startindex=i+1;
+            }
+        }
+        return totalgas>=0?startindex:-1;
     }
-
-    for(int i=0 ; i<n1 ; i++){
-        cin>>cost[i];
-    }
-    int index=-1;
-    int first=cost[0];
-    for(int i=0;i<n;i++){
-if(gas[i]>first){
-    index=i;
-    break;
-}
-    }
-   int finalans=gas[index];
-   for(int i=index;i<n;i++){
-    int firstans;
-    firstans+=finalans;
-    finalans+=gas[i]-cost[i]+gas[i+1];
-   }
-
-
-   if(finalans>gas[index]){
-    cout<<index;
-   }
-   else{
-    cout<<-1;
-   }
-
-    
-    return 0;
-}
+};
